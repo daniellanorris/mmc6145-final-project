@@ -1,0 +1,9 @@
+
+/*styling colors for the project, will add main colors in this file to keep everything in order */
+--root {
+    background: #1E1E1E;
+    --main-button: #B55BFF;
+    --main-card: #D9D9D9;
+    --input-field: #FFFFFF;
+}
+
