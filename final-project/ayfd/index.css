@@ -1,0 +1,25 @@
+.myRoot {
+    --mainbg: #1E1E1E;
+    --buttonbg: #B55BFF;
+    --header-foot-bg: rgba(217, 217, 217, 0.14);
+}
+
+html {
+    background-color: var(--mainbg);
+}
+
+.card {
+    border-radius: 19px;
+    background: rgba(217, 217, 217, 0.14);
+}
+
+button {
+    border-radius: 5px;
+    border: 1px solid var(--buttonbg);
+    background: var(--buttonbg);
+}
+
+body {
+    margin: 0;
+}
+
