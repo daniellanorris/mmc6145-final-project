@@ -8,13 +8,12 @@ import '../public/styles/global.css'
 
 function App() {
   return (
-    <div className="myRoot">
-      <div className="bg">
+    <>
       <Header />
           <Home />
       <Footer />
-    </div>
-  </div>
+      </>
+
   );
 }
 

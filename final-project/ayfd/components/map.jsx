@@ -13,9 +13,9 @@ const center = {
 
 const MapComponent = () => {
   return (
-    <LoadScript googleMapsApiKey={process.env.MAPS_API}>
-      <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={10}>
-        {/* Add markers, polygons, or other map components here */}
+    <LoadScript googleMapsApiKey="YOUR_API_KEY">
+      <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={8}>
+        {/* You can add markers, polygons, or other map components here */}
       </GoogleMap>
     </LoadScript>
   );

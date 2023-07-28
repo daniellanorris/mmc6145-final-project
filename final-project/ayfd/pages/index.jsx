@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
-import Header from '../components/header';
-import Footer from '../components/footer';
 import List from './maporlist.jsx';
-import Map from './maporlist.jsx';
+import MapFunction from './maporlist.jsx'
 
-import '../public/styles/home.module.css'
 import Button from '../components/button'
 
 export default function Home() {
   const [toggleVar, setToggle] = useState(0);
 
-  const handleButtonClick = () => {
-    setToggle((number) =>  number === 0 ? 1 : 0);
-  };
-
+  const changeView = () => {
+    setToggle((prevToggle) => (prevToggle === 0 ? 1 : 0))
+    console.log('clicked')
+    console.log(toggleVar)
+  }
   return (
     <>
-    <div className="myRoot">
-      <div className="bg"> 
-      <Header />
-      <Button onClick={handleButtonClick} key={toggleVar} >
-        'Click me'
+    <div onClick={changeView} key={toggleVar} >
+      <Button >
+       toggle
         </Button>
-      {toggleVar === 0 ? <List /> : <Map />}
-      <Footer />
       </div>
-    </div>
+      {toggleVar === 0 ? 
+      <List > list </List> : 
+      <MapFunction> map </MapFunction>}
+      
     </>
   );
 }

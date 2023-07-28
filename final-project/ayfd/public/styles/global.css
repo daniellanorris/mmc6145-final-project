@@ -2,10 +2,12 @@
     --mainbg: #1E1E1E;
     --buttonbg: #B55BFF;
     --header-foot-bg: rgba(217, 217, 217, 0.14);
+    --main-font: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 html {
     background-color: var(--mainbg);
+    font-family: var(--main-font) !important ;
 }
 
 .card {
@@ -13,13 +15,22 @@ html {
     background: rgba(217, 217, 217, 0.14);
 }
 
+li {
+    color: white;
+}
+
 button {
     border-radius: 5px;
     border: 1px solid var(--buttonbg);
     background: var(--buttonbg);
+    font: var(--main-font)
 }
 
-.body {
+button.clicked {
+    border: 2px solid white;
+}
+
+body {
     margin: 0;
 }
 

@@ -1,43 +1,40 @@
 
 import React from 'react'
-import Header from '../components/header'
-import Footer from '../components/footer'
 import {MapComponent} from '../components/map'
 
 import styles from '../public/styles/headerfooter.module.css'
 
 
 // main home page, where users can toggle between map view and list view. 
-export default function List() {
+export default function List({children}) {
+
+
+  //GET https://api.predicthq.com/v1/events/
   return (
     <>
       <div className={styles.container}>
-        <Header />
         <main className={styles.maincontent}>
-          <ul>
-            <li>
-              list
-            </li>
-          </ul>
+          <div className="card">
+            <img/> 
+            <h1> {}</h1>
+            <p>  {}  </p>
+          </div>
         </main>
-        <Footer />
       </div>
     </>
   )
 }
 
-export function Map() {
+export function MapFunction({children}) {
   return (
       <>
-          <div className={styles.container}>
-              <Header />
-              <main className={styles.maincontent}>
-                hi
+           <div className={styles.container}>
+              <main className={styles.maincontent}> 
                 <div>
-                  <MapComponent />
+                 {children}
                 </div>
+                <MapComponent/>
               </main>
-              <Footer />
           </div >
       </>
   )
