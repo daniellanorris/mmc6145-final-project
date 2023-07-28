@@ -2,7 +2,7 @@ import React from "react";
 import { ObFormsLogin } from "./ObFormsLogin";
 import { ObFormsPassword } from "./ObFormsPassword";
 import { ObFormsUsername } from "./ObFormsUsername";
-import "./style.css";
+
 
 export const LoginSignup = ({ className, OBFormsLoginPropertyDefaultClassName }) => {
   return (

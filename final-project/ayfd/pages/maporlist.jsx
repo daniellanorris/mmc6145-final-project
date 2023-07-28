@@ -2,9 +2,10 @@
 import React from 'react'
 import Header from '../components/header'
 import Footer from '../components/footer'
-import MapComponent from '../components/map'
+import {MapComponent} from '../components/map'
 
-import * as styles from 'styles/page.module.css'
+import styles from '../public/styles/headerfooter.module.css'
+
 
 // main home page, where users can toggle between map view and list view. 
 export default function List() {

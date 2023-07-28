@@ -1,5 +1,5 @@
 import React from "react";
-import * as styles from 'styles/headerfooter.module.css'
+import * as styles from '../public/styles/headerfooter.module.css'
 import Image from "next/image";
 
 
