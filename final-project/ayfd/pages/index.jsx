@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
-import List from './maporlist.jsx';
-import MapFunction from './maporlist.jsx'
+import { withIronSessionSsr } from "iron-session/next";
+import sessionOptions from "../config/session";
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    const { user } = req.session;
+    const props = {};
+    if (user) {
+      props.user = req.session.user;
+    }
+    props.isLoggedIn = !!user;
+    return { props };
+  },
+  sessionOptions
+);
+
+import React from 'react';
+import List from '../components/list';
 
 import Button from '../components/button'
 
 export default function Home() {
-  const [toggleVar, setToggle] = useState(0);
 
-  const changeView = () => {
-    setToggle((prevToggle) => (prevToggle === 0 ? 1 : 0))
-    console.log('clicked')
-    console.log(toggleVar)
-  }
   return (
     <>
-    <div onClick={changeView} key={toggleVar} >
       <Button >
-       toggle
-        </Button>
-      </div>
-      {toggleVar === 0 ? 
-      <List > list </List> : 
-      <MapFunction> map </MapFunction>}
-      
+        Filter
+      </Button>
+      <List />
+
     </>
   );
 }
