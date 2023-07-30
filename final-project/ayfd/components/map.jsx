@@ -11,6 +11,7 @@ const center = {
   lng: -122.4194,
 };
 
+//change to make iframe to insert to indiv [id] routes
 const MapComponent = () => {
   return (
     <LoadScript googleMapsApiKey="YOUR_API_KEY">
