@@ -19,6 +19,10 @@ li {
     color: white;
 }
 
+p {
+    color: white;
+}
+
 button {
     border-radius: 5px;
     border: 1px solid var(--buttonbg);

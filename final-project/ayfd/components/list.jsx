@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import styles from '../public/styles/headerfooter.module.css';
+import { withIronSessionSsr } from 'iron-session/next';
+import sessionOptions from "../config/session";
 
-import React from 'react'
-import styles from '../public/styles/headerfooter.module.css'
-import Button from './button'
+const API_KEY = process.env.TICKET_API;
+const API_URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=2&apikey=${API_KEY}`;
 
-
-// main home page, where users can toggle between map view and list view. 
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
@@ -19,46 +20,52 @@ export const getServerSideProps = withIronSessionSsr(
   sessionOptions
 );
 
-export default function List(props) {
-  //need to send a GET to predict hq....filter this data based on search params from user input
-  //for each list item, click leads to indiv event with more info. going to try to incorporate map
+export default function List () {
 
-    const [{filteredResults}, dispatch] = useBookContext()
-    const [fetching, setFetching] = useState(false)
-    const [previousQuery, setPreviousQuery] = useState()
-    const inputRef = useRef()
-    const inputDivRef = useRef()
-  
-    async function filterSearch(e) {
-      e.preventDefault()
-      if (fetching || !query.trim() || query === previousQuery) return
-      setPreviousQuery(query)
-      setFetching(true)
-      const res = await fetch(
-        `https://api.predicthq.com/v1/events/${query}`
-      )
+  const [events, setEvents] = useState([]);
 
-        console.log(res)
-      if (res.status !== 200) return
-      const data = await res.json()
-      dispatch({
-        action: actions.SEARCH_EVENTS,
-        payload: data
-      })
-      setFetching(false)
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data from the API');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        // Parse the data and do other things.
+        setEvents(data._embedded.events)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  function filterSearch() {
+    
+
+
+
+
+  };
+
   return (
     <>
       <div className={styles.container}>
         <main className={styles.maincontent}>
-          <Button onClick={filterSearch}> </Button>
-          <div className="card">
-            <img/> 
-            <h1> {}</h1>
-            <p>  {}  </p>
+        {events.map((event) => (
+          <div>
+              <p key={event.id}>{event.name}</p>
+              <p> {event.id} </p>
+              <p> {event.info} </p>
+              <p> {}</p>
           </div>
+              ))}
         </main>
       </div>
     </>
-  )
+  );
 }

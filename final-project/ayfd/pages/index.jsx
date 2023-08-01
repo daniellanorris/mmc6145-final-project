@@ -1,5 +1,10 @@
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../config/session";
+import React from 'react';
+import List from '../components/list';
+
+import Button from '../components/button'
+
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
@@ -14,10 +19,6 @@ export const getServerSideProps = withIronSessionSsr(
   sessionOptions
 );
 
-import React from 'react';
-import List from '../components/list';
-
-import Button from '../components/button'
 
 export default function Home() {
 

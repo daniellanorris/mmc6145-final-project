@@ -16,7 +16,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: [
-    "/favorites",
-  ]
+  matcher: ["/dashboard"]
 }

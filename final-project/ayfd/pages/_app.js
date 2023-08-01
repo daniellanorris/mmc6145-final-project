@@ -1,19 +1,16 @@
-import App from 'next/app'
 import '../public/styles/global.css'
-import Layout from '../components/layout'
+import Header from '../components/header'
+import Footer from '../components/footer'
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
+
   return (
     <>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </>
+  <Header/>
+  <Component {...pageProps} />
+  <Footer/>
+  </>
   )
 }
 
-MyApp.getInitialProps = async (context) => {
-  const ctx = await App.getInitialProps(context)
-
-  return { ...ctx }
-}
+export default MyApp
