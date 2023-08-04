@@ -2,6 +2,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../config/session";
 import React from 'react';
 import List from '../components/list';
+import Dropdown from '../components/dropdown'
 
 import Button from '../components/button'
 
@@ -22,11 +23,21 @@ export const getServerSideProps = withIronSessionSsr(
 
 export default function Home() {
 
+  function searchEvents(e) {
+    const clicked = e.addEventListener
+    if (clicked ) {
+
+    }
+
+    
+  }
+
   return (
     <>
-      <Button >
+      <Button onClick={searchEvents}>
         Filter
       </Button>
+      <Dropdown/>
       <List />
 
     </>

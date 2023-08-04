@@ -8,18 +8,22 @@
 html {
     background-color: var(--mainbg);
     font-family: var(--main-font) !important ;
+    color: white;
 }
 
 .card {
     border-radius: 19px;
     background: rgba(217, 217, 217, 0.14);
+    border:#B55BFF solid;
+    padding: 10px;
+    margin: 20px;
 }
 
 li {
     color: white;
 }
 
-p {
+p, h2, h3, h1 {
     color: white;
 }
 

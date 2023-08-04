@@ -18,12 +18,14 @@
     "@next/font": "13.0.3",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "bootstrap": "^5.3.1",
     "env": "^0.0.2",
     "iron-session": "^6.3.1",
     "mongoose": "^6.4.0",
     "next": "13.0.2",
     "predicthq": "^0.2.2",
     "react": "18.2.0",
+    "react-bootstrap": "^2.8.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {

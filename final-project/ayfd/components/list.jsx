@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styles from '../public/styles/headerfooter.module.css';
 import { withIronSessionSsr } from 'iron-session/next';
 import sessionOptions from "../config/session";
+import Link from 'next/link'
 
 const API_KEY = process.env.TICKET_API;
-const API_URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=2&apikey=${API_KEY}`;
+const API_URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=100&city=denver&apikey=VFznyrIiGGXWVay8OEG5vg5EwtST7pwp`;
 
 
 export const getServerSideProps = withIronSessionSsr(
@@ -44,25 +45,20 @@ export default function List () {
     fetchData();
   }, []);
 
-  function filterSearch() {
-    
-
-
-
-
-  };
 
   return (
     <>
       <div className={styles.container}>
         <main className={styles.maincontent}>
         {events.map((event) => (
-          <div>
-              <p key={event.id}>{event.name}</p>
+        <Link key={event.id} href={`/event/id=?${event.id}`} style={{textDecoration: 'none'}}>
+          <div key={event.id} class="card bg-secondary" styles={{height: "10px!important"}} >
+              <h1>{event.name}</h1>
               <p> {event.id} </p>
               <p> {event.info} </p>
               <p> {}</p>
           </div>
+        </Link>
               ))}
         </main>
       </div>

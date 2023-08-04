@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 
-export default function Button({children}) {
+export default function Button({onResetClick, children}) {
   const [clicked, setClicked] = useState(false);
 
   const handleButtonClick = () => {
     setClicked(true);
+    if (typeof onResetClick === 'function') {
+      onResetClick();
+    }
     // Remove the 'clicked' class after the animation is complete
     setTimeout(() => {
       setClicked(false);
     }, 200);
+
+    
   };
 
   return (
