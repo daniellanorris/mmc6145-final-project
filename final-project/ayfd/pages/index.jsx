@@ -3,8 +3,9 @@ import sessionOptions from "../config/session";
 import React from 'react';
 import List from '../components/list';
 import Dropdown from '../components/dropdown'
-
+import fetchData from '../components/list'
 import Button from '../components/button'
+import { ListProvider, list } from "../context/ListContext";
 
 
 export const getServerSideProps = withIronSessionSsr(
@@ -22,23 +23,15 @@ export const getServerSideProps = withIronSessionSsr(
 
 
 export default function Home() {
-
-  function searchEvents(e) {
-    const clicked = e.addEventListener
-    if (clicked ) {
-
-    }
-
-    
-  }
-
   return (
     <>
-      <Button onClick={searchEvents}>
+      <Button onClick={fetchData}>
         Filter
       </Button>
-      <Dropdown/>
-      <List />
+      <ListProvider>
+        <Dropdown />
+        <List />
+      </ListProvider>
 
     </>
   );

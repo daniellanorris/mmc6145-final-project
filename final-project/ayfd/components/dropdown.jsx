@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import Button from './button'
+import { useListContext, ListProvider } from '../context/ListContext';
 
 import Image from 'next/image';
 
 const initialOptions = [
     { id: '1', value: 'Concerts' },
-    { id: '2', value: 'Festivals' },
+    { id: '2', value: 'Fairs & Festivals' },
     { id: '3', value: 'Markets' },
     { id: '4', value: 'Drag Brunch' },
+    {id: '5', value: 'Dance/Electronic'},
+
 ];
 
-const useDropdown = () => {
+export const useDropdown = () => {
     const [selectedValue, setSelectedValue] = useState('');
     const [options, setOptions] = useState([...initialOptions]);
-    const [list, setList] = useState([]);
+    const {list, setList} = useListContext();
     const [removedOptions, setRemovedOptions] = useState([])
 
     const addToFilter = (e) => {
@@ -55,6 +58,7 @@ export default function Dropdown() {
 
     return (
         <>
+        <ListProvider>
             <Button onResetClick={resetFilter}>Reset </Button>
             <select name="selectList" id="selectList" onChange={addToFilter} value={selectedValue}>
                 <option style={{padding: "10px"}}>Select options to filter</option>
@@ -69,6 +73,7 @@ export default function Dropdown() {
                  {list.map((item) => (
                 <div onClick={() => addToOptions(item)} key={item.id}> 
                     <Image src='/delete_icon.png' alt="delete list value" width="20" height="20" style={{margin: "5px"}}/>{item.value} </div>))} </div>
+        </ListProvider>
         </>
     );
 }
