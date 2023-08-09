@@ -2,6 +2,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../../config/session";
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link'
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
@@ -17,9 +18,10 @@ export const getServerSideProps = withIronSessionSsr(
   sessionOptions
 );
 
-export default function EventPage() {
+export default function EventPage(props) {
   const router = useRouter();
   const eventId = router.query.eventId;
+  const { isLoggedIn } = props
 
   const [event, setEvent] = useState({});
 
@@ -50,6 +52,8 @@ export default function EventPage() {
 
   return (
     <>
+    {
+    isLoggedIn ? 
     <main role="main">
       <div class="jumbotron"> 
       <div class="container">
@@ -87,7 +91,12 @@ export default function EventPage() {
       <p> {event.ticket ? event.ticket : 'Not a ticketed event'}</p>
       </div>
       </div>
-     </main>
+     </main> :
+     <div>
+     <p> please log in to view your favorites </p> 
+     <Link href="/login"> Go to login</Link>
+     </div>
+     }
     </>
   );
 }

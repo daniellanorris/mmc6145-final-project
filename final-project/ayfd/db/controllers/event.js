@@ -32,7 +32,7 @@ export async function add(userId, event) {
 export async function remove(userId, eventId) {
   await dbConnect()
   const user = await User.findByIdAndUpdate(
-    eventId,
+    userId,
     { $pull: { favoriteEvents: {_id: eventId } } },
     { new: true }
   )

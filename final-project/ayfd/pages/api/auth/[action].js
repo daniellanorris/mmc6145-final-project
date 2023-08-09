@@ -14,6 +14,7 @@ export default withIronSessionApiRoute(
       return logout(req,res)
     case "signup":
       return signup(req,res)
+      consolelog('signup')
   default:
     return res.status(404).end()
 
@@ -50,8 +51,9 @@ async function signup(req, res) {
       username: user.username,
       id: user.id
     }
+    
     await req.session.save()
-    res.redirect('/')
+    res.redirect('/login')
   } catch(err) {
     res.status(400).json({error: err.message})
   }

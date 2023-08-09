@@ -6,7 +6,7 @@ export default function() {
     try {
       const res = await fetch('/api/auth/logout', {method: 'POST'})
       if (res.status === 200)
-        router.push('/')
+        router.replace(router.asPath)
     } catch(err) {
       console.log(err)
     }

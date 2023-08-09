@@ -9,6 +9,7 @@ export async function create(username, password) {
 
   const user = await User.create({username, password})
 
+
   if (!user)
     throw new Error('Error inserting User')
 

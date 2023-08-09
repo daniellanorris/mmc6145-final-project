@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { EventProvider } from '../context/EventContext';
 
 function MyApp({ Component, pageProps }) {
-
   return (
     <>
       <div class="bg-dark" >

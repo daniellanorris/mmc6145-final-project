@@ -24,13 +24,14 @@ export default function Login(props) {
     username: "",
     password: "",
   });
-  const [error, setError] = useState("");
+
 
   function handleChange(e) {
-    setForm({ username, password, ...{ [e.target.name]: e.target.value } });
+    setForm({ username, password, ...{ [e.target.id]: e.target.value } });
   }
 
   async function handleLogin(e) {
+    const [error, setError] = useState("")
     e.preventDefault();
     if (!username.trim() || !password.trim())
       return setError('Must include username and password');
@@ -43,14 +44,12 @@ export default function Login(props) {
         body: JSON.stringify({ username, password }),
       });
       if (res.status === 200) return router.back();
-      const { error: message } = await res.json();
-      setError(message);
+  
     } catch (err) {
       console.log(err);
     }
   }
 
-  const isLoggedIn = props.isLoggedIn; // Assuming `props` contains the props from getServerSideProps
 
   return (
     <>
@@ -70,7 +69,7 @@ export default function Login(props) {
             onChange={handleChange}
             value={password}
           />
-          <button>Log In</button>
+          <button type="submit">Log In</button>
         </form>
         <Link href="/signup">
           <Button> Sign up </Button>
