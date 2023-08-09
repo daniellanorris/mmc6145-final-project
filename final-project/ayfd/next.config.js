@@ -1,4 +1,6 @@
-module.exports = {
+/** @type {import('next').NextConfig} */
+
+const config = {
     images: {
       remotePatterns: [
         {
@@ -8,4 +10,9 @@ module.exports = {
         },
       ],
     },
+    experiments: {
+      topLevelAwait: true,
+    },
+    reactStrictMode: true,
+    swcMinify: true,
   }

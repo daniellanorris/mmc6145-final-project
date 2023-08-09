@@ -14,3 +14,4 @@ export async function create(username, password) {
 
   return normalizeId(user)
 }
+

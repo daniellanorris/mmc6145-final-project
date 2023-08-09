@@ -1,6 +1,7 @@
 import { Schema, model, models } from 'mongoose'
-import bookSchema from './book'
+import eventSchema from './event'
 import bcrypt from 'bcrypt'
+
 
 const UserSchema = new Schema({
   username: {
@@ -14,9 +15,8 @@ const UserSchema = new Schema({
     minLength: 5,
     maxLength: 200
   },
-  favoriteBooks: [bookSchema]
+  favoriteEvents: [eventSchema]
 })
-
 // hashes the password before it's stored in mongo
 UserSchema.pre('save', async function(next) {
   if (this.isNew)
@@ -25,3 +25,4 @@ UserSchema.pre('save', async function(next) {
 })
 
 export default models.User || model('User', UserSchema)
+

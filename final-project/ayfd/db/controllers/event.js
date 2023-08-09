@@ -5,35 +5,35 @@ export async function getAll(userId) {
   await dbConnect()
   const user = await User.findById(userId).lean()
   if (!user) return null
-  return user.favoriteBooks.map(book => normalizeId(book))
+  return user.favoriteEvents.map(event=> normalizeId(event))
 }
 
-export async function getByGoogleId(userId, bookId) {
+export async function getId(userId, eventId) {
   await dbConnect()
   const user = await User.findById(userId).lean()
   if (!user) return null
-  const book = user.favoriteBooks.find(book => book.googleId === bookId)
-  if (book) return normalizeId(book)
+  const event = user.favoriteEvents.find(event => event.eventId === eventId)
+  if (event) return normalizeId(event)
   return null
 }
 
-export async function add(userId, book) {
+export async function add(userId, event) {
   await dbConnect()
   const user = await User.findByIdAndUpdate(
     userId,
-    { $addToSet: { favoriteBooks: book } },
+    { $addToSet: { favoriteEvents: event } },
     { new: true }
   )
   if (!user) return null
-  const addedBook = user.favoriteBooks.find(bk => bk.googleId === book.googleId)
-  return normalizeId(addedBook)
+  const addedEvent = user.favoriteEvents.find(ev => ev.eventId === event.eventId)
+  return normalizeId(addedEvent)
 }
 
-export async function remove(userId, bookId) {
+export async function remove(userId, eventId) {
   await dbConnect()
   const user = await User.findByIdAndUpdate(
-    userId,
-    { $pull: { favoriteBooks: {_id: bookId } } },
+    eventId,
+    { $pull: { favoriteEvents: {_id: eventId } } },
     { new: true }
   )
   if (!user) return null

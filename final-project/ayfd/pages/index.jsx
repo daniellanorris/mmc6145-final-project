@@ -7,7 +7,6 @@ import fetchData from '../components/list'
 import Button from '../components/button'
 import { ListProvider } from "../context/ListContext";
 
-
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
     const { user } = req.session;
@@ -25,13 +24,13 @@ export const getServerSideProps = withIronSessionSsr(
 export default function Home() {
   return (
     <>
-          <ListProvider>
+    <ListProvider>
       <Button onClick={fetchData}>
         Filter
       </Button>
         <Dropdown />
         <List />
-      </ListProvider>
+    </ListProvider>
 
     </>
   );

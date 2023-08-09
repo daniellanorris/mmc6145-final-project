@@ -5,7 +5,7 @@ import sessionOptions from "../config/session";
 import Link from 'next/link'
 import { useListContext } from '../context/ListContext';
 import Button from './button'
-import Image from 'next/image'
+import {useRouter} from 'next/router';
 
 
 export const useURLQuery = (callback) => {
@@ -81,27 +81,37 @@ export const useURLQuery = (callback) => {
       useEffect(() => {
         fetchData();
       }, [genrefetchUrl]);
+
+      const router = useRouter();
     
+      const handleNavigateToEventDetail = (event) => {
+        router.push({
+          pathname: `/event/${event.id}`,
+          query: {
+            eventId: event.id,
+          },
+        });
+      };
+
       return (
         <>
-                <Button onClick={fetchData}> Filter</Button>
+      <Button onClick={fetchData}> Filter</Button>
       <div className={styles.container}>
         <main className={styles.maincontent}>
           {events.map((event) => (
-            <Link key={event.id} href={`/event/id=${event.id}`} style={{ textDecoration: 'none' }}>
+            <Link key={event.id} onClick={() => handleNavigateToEventDetail(event)} href={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
               <div key={event.id} className="card bg-secondary" style={{ height: "10px!important" }}>
                 {/* Check if the images array is available */}
                 {event.images && event.images.length > 0 ? (
-                  // Use the first image URL from the images array
+                 //using the first imageurl from the images array
                   <img src={event.images[0].url} alt={event.name + ' image'} width="305" height="auto"/>
                 ) : (
-                  // If images array is not available, you can display a placeholder image or any other fallback content
                   <div style={{ width: 305, height: 225, background: 'grey' }} />
                 )}
                 <h1>{event.name}</h1>
                 <p>{event.id}</p>
                 <p>{event.info ? event.info : event.pleaseNote}</p>
-                <p>{/* Put any other information you want to display here */}</p>
+                <Link href='/favorites'><Button> Save to Favorites</Button></Link>
               </div>
             </Link>
           ))}
@@ -110,3 +120,6 @@ export const useURLQuery = (callback) => {
         </>
       );
     } 
+
+    
+        
