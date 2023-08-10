@@ -3,13 +3,21 @@ import sessionOptions from "../../config/session";
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
+import Button from '../../components/button'
+import { useEventContext } from '../../context';
+import * as actions from '../../context/actions'
+import db from '../../db'
 
 export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
+  async function getServerSideProps({ req, params }) {
     const { user } = req.session;
     const props = {};
     if (user) {
       props.user = req.session.user;
+      const event = await db.event.getId(user.id, params.id); 
+    
+    if (event) 
+      props.event = event;
     }
     props.isLoggedIn = !!user;
 
@@ -19,11 +27,30 @@ export const getServerSideProps = withIronSessionSsr(
 );
 
 export default function EventPage(props) {
+  const [{ eventData }, dispatch] = useEventContext();
+  const [clicky, setClicked] = useState(false);
   const router = useRouter();
-  const eventId = router.query.eventId;
+  const eventId = router.query.id;
   const { isLoggedIn } = props
+  const [{eventSearchResults}] = useEventContext()
 
-  const [event, setEvent] = useState({});
+  const [eventSet, setEvent] = useState({});
+
+  let isFavoriteEvent = false;
+  if (props.event) {
+    isFavoriteEvent = true;
+  } else {
+    const event = eventSearchResults.find(event => event.eventId === eventId);
+    if (event) {
+      isFavoriteEvent = true;
+      setEvent(event);
+    }
+  }
+
+  useEffect(() => {
+    if (!props.event && !event)
+      router.push('/')
+  }, [props.event, eventSearchResults, router, eventSet])
 
   const ID_URL = `https://app.ticketmaster.com/discovery/v2/events/${eventId}?apikey=VFznyrIiGGXWVay8OEG5vg5EwtST7pwp&locale=*`;
 
@@ -50,6 +77,48 @@ export default function EventPage(props) {
     fetchDataId();
   }, [ID_URL]);
 
+
+
+  async function addToFavs(e, eventId) {
+    e.preventDefault();
+    const res = await fetch("/api/event", {
+      method: 'POST',
+      body: JSON.stringify({ eventId })
+    });
+
+    if (res.status === 200) {
+      dispatch({
+        action: actions.ADD_TO_FAVORITES, 
+        payload: eventId
+      });
+      handleToggleClicked();
+      router.replace(router.asPath);
+    }
+  }
+
+  async function deleteFromFavs(e, eventId) {
+    e.preventDefault();
+    const res = await fetch("/api/event", {
+      method: 'DELETE',
+      body: JSON.stringify({ eventId })
+    });
+
+    if (res.status === 200) {
+      dispatch({
+        action: actions.REMOVE_FROM_FAVORITES, 
+        payload: eventId
+      });
+      handleToggleClicked();
+      router.replace(router.asPath);
+    }
+  }
+
+
+  function handleToggleClicked() {
+    setClicked(clicked => !clicked);
+  }
+
+
   return (
     <>
     {
@@ -58,21 +127,28 @@ export default function EventPage(props) {
       <div class="jumbotron"> 
       <div class="container">
         <div class="display">
-        {event.images && event.images.length > 0 ? (
+        {eventSet.images && eventSet.images.length > 0 ? (
                  //using the first imageurl from the images array
-                  <img src={event.images[0].url} alt={event.name + ' image'} width="305" height="auto"/>
+                  <img src={eventSet.images[0].url} alt={eventSet.name + ' image'} width="305" height="auto"/>
                 ) : (
                   <div style={{ width: 305, height: 225, background: 'grey' }} />
                 )}
-        <div class="display-3" style={{color: "white"}}>  {event.name} </div>
+        <div class="display-3" style={{color: "white"}}>  {eventSet.name} </div>
         </div>
       </div>
       <div class="container">
+      {clicky === false ? (
+                  <Link href='/favorites'> 
+                    <Button onClick={addToFavs}> Save Event </Button>
+                  </Link>
+                ) : (
+                  <Button onClick={deleteFromFavs}> Remove Event </Button>
+                )}
       <h2>Price</h2>
       <ul className = "card">
-      {event.priceRanges && (
+      {eventSet.priceRanges && (
     <div>
-      {event.priceRanges.map((price, index) => (
+      {eventSet.priceRanges.map((price, index) => (
         <div key={index}>
           <h2 style={{ color: "green" }}>
             ${price.min} - ${price.max}
@@ -83,16 +159,16 @@ export default function EventPage(props) {
   )}
       </ul>
       
-      {event.dates && event.dates.start && (
+      {eventSet.dates && eventSet.dates.start && (
         <>
-          <p> Date: {event.dates.start.localDate} </p>
-          <p> Time: {event.dates.start.localTime} </p>
+          <p> Date: {eventSet.dates.start.localDate} </p>
+          <p> Time: {eventSet.dates.start.localTime} </p>
         </>
       )}
       <p>
-        {event.info ? event.info : event.pleaseNote}
+        {eventSet.info ? eventSet.info : eventSet.pleaseNote}
       </p>
-      <p> {event.ticket ? event.ticket : 'Not a ticketed event'}</p>
+      <p> {eventSet.ticket ? eventSet.ticket : 'Not a ticketed event'}</p>
       </div>
       </div>
      </main> :

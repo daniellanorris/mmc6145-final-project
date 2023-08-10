@@ -2,10 +2,10 @@ import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../config/session";
 import db from "../db";
 
+
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
     const user = req.session.user;
-
     let events;
     if (user) {
       events = await db.event.getAll(user.id);
@@ -30,13 +30,14 @@ export const getServerSideProps = withIronSessionSsr(
   sessionOptions
 );
 
-export default function Favorites({ favoriteEvents }) {
+export default function Favorites({ favoriteEvents, eventId }) {
+  console.log(favoriteEvents)
   return (
     <main className="container">
       <div className="grid">
         {favoriteEvents ? (
           favoriteEvents.map((event) => (
-            <h1 key={event._id} className="col-4">
+            <h1 key={event.eventId} className="col-4">
               {event.eventId}
             </h1>
           ))

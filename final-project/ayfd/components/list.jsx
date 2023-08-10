@@ -38,7 +38,6 @@ export default function List() {
   const [{ eventData }, dispatch] = useEventContext();
   const [events, setEvents] = useState([]);
   const { list } = useListContext();
-  const [clicky, setClicked] = useState(false);
   const router = useRouter();
 
   const handleURLQuery = (params) => {
@@ -88,44 +87,6 @@ export default function List() {
     });
   };
 
-  async function addToFavs(e, eventId) {
-    e.preventDefault();
-    const res = await fetch("/api/event", {
-      method: 'POST',
-      body: JSON.stringify({ eventId })
-    });
-
-    if (res.status === 200) {
-      dispatch({
-        action: actions.ADD_TO_FAVORITES, 
-        payload: eventId
-      });
-      handleToggleClicked();
-      router.replace(router.asPath);
-    }
-  }
-
-  async function deleteFromFavs(e, eventId) {
-    e.preventDefault();
-    const res = await fetch("/api/event", {
-      method: 'POST',
-      body: JSON.stringify({ eventId })
-    });
-
-    if (res.status === 200) {
-      dispatch({
-        action: actions.REMOVE_FROM_FAVORITES, 
-        payload: eventId
-      });
-      handleToggleClicked();
-      router.replace(router.asPath);
-    }
-  }
-
-
-  function handleToggleClicked() {
-    setClicked(clicked => !clicked);
-  }
 
   return (
     <>
@@ -143,13 +104,7 @@ export default function List() {
                 <h1>{event.name}</h1>
                 <p>{event.id}</p>
                 <p>{event.info ? event.info : event.pleaseNote}</p>
-                {clicky === false ? (
-                  <Link href='/favorites'> 
-                    <Button onClick={addToFavs}> Save Event </Button>
-                  </Link>
-                ) : (
-                  <Button onClick={deleteFromFavs}> Remove Event </Button>
-                )}
+                
               </div>
             </Link>
           ))}
