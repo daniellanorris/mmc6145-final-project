@@ -20,7 +20,7 @@ export const getServerSideProps = withIronSessionSsr(
   sessionOptions
 );
 
-export default function Signup(props) {
+export default function Signup() {
   const router = useRouter();
   const [
     { username, password, "confirm-password": confirmPassword },
@@ -57,7 +57,7 @@ export default function Signup(props) {
         },
         body: JSON.stringify({ username, password }),
       });
-      if (res.status === 200) return router.push("/");
+      if (res.status === 200) return router.back();
       const { error: message } = await res.json();
       setError(message);
     } catch (err) {

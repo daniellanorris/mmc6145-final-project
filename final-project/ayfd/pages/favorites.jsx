@@ -30,19 +30,19 @@ export const getServerSideProps = withIronSessionSsr(
   sessionOptions
 );
 
-export default function Favorites({ favoriteEvents, eventId }) {
-  console.log(favoriteEvents)
+export default function Favorites(props) {
+  console.log(props.favoriteEvents)
   return (
     <main className="container">
       <div className="grid">
-        {favoriteEvents ? (
-          favoriteEvents.map((event) => (
+        {props.favoriteEvents.length > 0 ? (
+          props.favoriteEvents.map((event) => (
             <h1 key={event.eventId} className="col-4">
-              {event.eventId}
+              {props.event.eventId}
             </h1>
           ))
         ) : (
-          <h1> No Favorite Events!! </h1>
+          <h1 style={{color: "white"}}> No Favorite Events!! </h1>
         )}
       </div>
     </main>
