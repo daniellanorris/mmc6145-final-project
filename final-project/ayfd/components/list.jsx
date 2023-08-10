@@ -96,8 +96,11 @@ export default function List() {
     });
 
     if (res.status === 200) {
+      dispatch({
+        action: actions.ADD_TO_FAVORITES, 
+        payload: eventId
+      });
       handleToggleClicked();
-      fetchData();
       router.replace(router.asPath);
     }
   }
@@ -110,11 +113,15 @@ export default function List() {
     });
 
     if (res.status === 200) {
+      dispatch({
+        action: actions.REMOVE_FROM_FAVORITES, 
+        payload: eventId
+      });
       handleToggleClicked();
-      fetchData();
       router.replace(router.asPath);
     }
   }
+
 
   function handleToggleClicked() {
     setClicked(clicked => !clicked);
