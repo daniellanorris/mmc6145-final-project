@@ -72,9 +72,9 @@ export default function EventPage(props) {
       <ul className = "card">
         {event.priceRanges && event.priceRanges.map((price, index) => (
           <div >
-          <li key={index} style={{listStyleType : "none", color: "green"}}>
+          <h2 key={price.index} style={{color: "green"}}>
             ${price.min} - ${price.max}
-          </li>
+          </h2>
           </div>
         ))}
       </ul>

@@ -52,7 +52,7 @@ async function signup(req, res) {
     }
     
     await req.session.save()
-    res.redirect('/')
+    res.redirect('/login')
   } catch(err) {
     res.status(400).json({error: err.message})
   }
