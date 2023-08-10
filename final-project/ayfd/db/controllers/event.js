@@ -37,7 +37,7 @@ export async function remove(userId, eventId) {
   await dbConnect()
   const user = await User.findByIdAndUpdate(
     userId,
-    { $pull: { favoriteEvents: {id: eventId } } },
+    { $pull: { favoriteEvents: {_id: eventId } } },
     { new: true }
   )
   if (!user) return null
