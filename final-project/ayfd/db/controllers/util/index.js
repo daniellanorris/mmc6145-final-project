@@ -1,5 +1,5 @@
-export function normalizeId({_id, ...otherProperties}) {
-  const id = _id.toString()
+export function normalizeId({id, ...otherProperties}) {
+  id.toString()
   return { ...otherProperties, id }
 }
 

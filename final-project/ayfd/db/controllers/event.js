@@ -24,8 +24,12 @@ export async function add(userId, event) {
     { $addToSet: { favoriteEvents: event } },
     { new: true }
   )
-  if (!user) return null
+  if (!user) {
+  console.log('not user')
+  return null 
+  }
   const addedEvent = user.favoriteEvents.find(ev => ev.eventId === event.eventId)
+  console.log('added')
   return normalizeId(addedEvent)
 }
 
@@ -33,7 +37,7 @@ export async function remove(userId, eventId) {
   await dbConnect()
   const user = await User.findByIdAndUpdate(
     userId,
-    { $pull: { favoriteEvents: {_id: eventId } } },
+    { $pull: { favoriteEvents: {id: eventId } } },
     { new: true }
   )
   if (!user) return null

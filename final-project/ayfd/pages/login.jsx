@@ -27,11 +27,12 @@ export default function Login(props) {
 
 
   function handleChange(e) {
-    setForm({ username, password, ...{ [e.target.id]: e.target.value } });
+    setForm({ username, password, ...{ [e.target.name]: e.target.value } });
   }
 
+  const [error, setError] = useState("")
+  
   async function handleLogin(e) {
-    const [error, setError] = useState("")
     e.preventDefault();
     if (!username.trim() || !password.trim())
       return setError('Must include username and password');
@@ -69,7 +70,7 @@ export default function Login(props) {
             onChange={handleChange}
             value={password}
           />
-          <button type="submit">Log In</button>
+          <button>Log In</button>
         </form>
         <Link href="/signup">
           <Button> Sign up </Button>

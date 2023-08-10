@@ -8,6 +8,7 @@ import Button from './button'
 import {useRouter} from 'next/router';
 
 
+
 export const useURLQuery = (callback) => {
   useEffect(() => {
     const handlePopstate = (event) => {
@@ -35,6 +36,7 @@ export const useURLQuery = (callback) => {
     export default function List() {
       const [events, setEvents] = useState([]);
       const { list } = useListContext();
+      const [clicky, setClicky] = useState(false);
     
       const handleURLQuery = (params) => {
         const newList = [];
@@ -93,6 +95,41 @@ export const useURLQuery = (callback) => {
         });
       };
 
+      async function addToFavs(e, eventId) {
+        e.preventDefault()
+        const res = await fetch("/api/event" ,  {
+          method: 'POST',  
+          body: JSON.stringify({id: eventId})
+        });
+
+        if (res.status === 200) {
+          router.replace(router.asPath)
+          handleToggleClicked()
+        }
+
+
+      }
+
+      async function deleteFromFavs(e) {
+        e.preventDefault()
+        const res = await fetch("/api/event" ,  {
+          method: 'POST',  
+          body: JSON.stringify({id: event.id})
+        });
+
+        if (res.status === 200) {
+          router.replace(router.asPath)
+          handleToggleClicked()
+        }
+
+      }
+
+
+
+      function handleToggleClicked() {
+        setClicked(clicked => !clicked); // Toggle the clicky state
+      }
+
       return (
         <>
       <Button onClick={fetchData}> Filter</Button>
@@ -111,9 +148,15 @@ export const useURLQuery = (callback) => {
                 <h1>{event.name}</h1>
                 <p>{event.id}</p>
                 <p>{event.info ? event.info : event.pleaseNote}</p>
-                <Link href='/favorites'><Button> Save to Favorites</Button></Link>
+                {clicky === false ? (
+                <Link href='/favorites'> 
+                  <Button onClick={addToFavs}> Save Event </Button></Link> ) : (
+                  <Button onClick={deleteFromFavs}> Remove Event </Button>
+                  )
+                   }
               </div>
             </Link>
+            
           ))}
         </main>
       </div>
