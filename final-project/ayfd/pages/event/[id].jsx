@@ -63,10 +63,10 @@ export default function EventPage(props) {
       const data = await response.json();
       console.log('success')
 
-      const { dates, start, name, info, pleaseNote, priceRanges, images} = data;
+      const { id, dates, start, name, info, pleaseNote, priceRanges, images} = data;
 
       // Set the event state
-      setEvent({ dates, start, name, info, pleaseNote, priceRanges, images});
+      setEvent({ id, dates, start, name, info, pleaseNote, priceRanges, images});
 
     } catch (error) {
 
@@ -79,28 +79,29 @@ export default function EventPage(props) {
 
 
 
-  async function addToFavs(e, eventId) {
+  async function addToFavs({eventSet}) {
     e.preventDefault();
     const res = await fetch("/api/event", {
       method: 'POST',
-      body: JSON.stringify({ eventId })
+      body: JSON.stringify({ id })
     });
 
     if (res.status === 200) {
       dispatch({
         action: actions.ADD_TO_FAVORITES, 
-        payload: eventId
+        payload: eventSet
       });
+      
       handleToggleClicked();
       router.replace(router.asPath);
     }
   }
 
-  async function deleteFromFavs(e, eventId) {
+  async function deleteFromFavs(e, id) {
     e.preventDefault();
     const res = await fetch("/api/event", {
       method: 'DELETE',
-      body: JSON.stringify({ eventId })
+      body: JSON.stringify({ id })
     });
 
     if (res.status === 200) {

@@ -2,6 +2,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import sessionOptions from "../../../config/session"
 import db from '../../../db'
 
+
 // this file handles /api/auth/:action with any request method (GET, POST, etc)
 export default withIronSessionApiRoute(
   function handler(req, res) {
@@ -24,7 +25,7 @@ export default withIronSessionApiRoute(
 
 async function login(req, res) {
   const { username, password } = req.body
-  try {
+  try {use 
     const user = await db.auth.login(username, password)
     req.session.user = {
       username: user.username,

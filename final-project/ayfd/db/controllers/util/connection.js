@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost:27017/${process.env.DB_NAME}`;
+const MONGODB_URI =  process.env.MONGODB_URI || `mongodb://localhost:27017/${process.env.DB_NAME}`;
 
 
 let cached = global.mongoose
@@ -20,7 +20,9 @@ export async function dbConnect() {
     }
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('connected')
       return mongoose
+
     })
   }
 
