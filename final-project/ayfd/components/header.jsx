@@ -4,6 +4,7 @@ import styles from '../public/styles/headerfooter.module.css'
 import useLogout from '../hooks/useLogout'
 
 export default function Header() {
+  const loggeroutter = useLogout();
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,11 +24,12 @@ export default function Header() {
               <a class="nav-link" href="/favorites">Favorites </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/login" onClick={useLogout}> Logout </a>
+              <a class="nav-link" href="/login" onClick={loggeroutter}> Logout </a>
             </li>
           </ul>
           {/* Links for the toggler icon */}
           <ul class="navbar-nav ml-auto">
+            <li> <a href="/"> Home</a></li> 
           </ul>
         </div>
       </nav>
