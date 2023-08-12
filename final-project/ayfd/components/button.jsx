@@ -5,7 +5,7 @@ export default function Button({children, onClick}) {
   const [clicked, setClicked] = useState(false);
 
   const handleButtonClick = () => {
-    onClick()
+    onClick
     setClicked(true);
     // Remove the 'clicked' class after the animation is complete
     setTimeout(() => {

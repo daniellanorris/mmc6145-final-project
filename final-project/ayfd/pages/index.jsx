@@ -21,13 +21,12 @@ export const getServerSideProps = withIronSessionSsr(
 );
 
 
+
 export default function Home() {
+
   return (
     <>
     <ListProvider>
-      <Button onClick={fetchData}>
-        Filter
-      </Button>
         <Dropdown />
         <List />
     </ListProvider>

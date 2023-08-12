@@ -6,6 +6,8 @@ import { EventProvider } from '../context'
 
 
 
+
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -17,6 +19,7 @@ function MyApp({ Component, pageProps }) {
         <Footer />
       </div>
       </EventProvider>
+
 
     </>
   )

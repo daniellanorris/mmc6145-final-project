@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Button from './button';
 import { useListContext, ListProvider } from '../context/ListContext';
 const API_GENRE = 'https://app.ticketmaster.com/discovery/v2/classifications.json?apikey=VFznyrIiGGXWVay8OEG5vg5EwtST7pwp';
 
@@ -107,8 +106,8 @@ export const useDropdown = (genreEvents) => {
     return (
       <>
         <ListProvider>
-          <Button onResetClick={resetFilter}>Reset </Button>
-          <select onChange={addToFilter} name={selectedValue}>
+          <div class="text-center" style={{padding: "10px"}}>
+          <select onChange={addToFilter} name={selectedValue} style={{ border: "5px solid purple"}}>
             <option key="default" style={{ padding: '10px' }}>Select options to filter</option>
             {options.map((option) => (
               <option key={option.id} name={option.name}>
@@ -116,6 +115,7 @@ export const useDropdown = (genreEvents) => {
               </option>
             ))}
           </select>
+          </div>
           <div className={list.length > 0 ? 'card' : 'none'}>
             <h2> Selected Filters</h2>
             {list.map((item) => (

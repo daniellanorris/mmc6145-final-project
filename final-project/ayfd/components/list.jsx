@@ -98,7 +98,6 @@ export default function List() {
 
   return (
     <>
-      <Button onClick={fetchData}> Filter</Button>
       <div className={styles.container}>
         <main className={styles.maincontent}>
           {events.map((event) => (
