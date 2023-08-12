@@ -7,6 +7,7 @@ export async function login(username, password) {
     throw new Error('Must include username and password')
 
   await dbConnect()
+  
   const user = await User.findOne({username}).lean()
 
   if (!user)

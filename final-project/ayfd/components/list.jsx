@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useEventContext } from '../context';
 import * as actions from '../context/actions'
 
+
 export const useURLQuery = (callback) => {
   useEffect(() => {
     const handlePopstate = (event) => {
@@ -40,6 +41,7 @@ export default function List() {
   const { list } = useListContext();
   const router = useRouter();
 
+
   const handleURLQuery = (params) => {
     const newList = [];
     for (const value of params.values()) {
@@ -64,11 +66,17 @@ export default function List() {
         throw new Error('Failed to fetch data from the API');
       }
       const data = await response.json();
+      
       dispatch({
         action: actions.GET_EVENTS, 
         payload: data._embedded.events
       });
+
+      
       setEvents(data._embedded.events);
+      return eventData
+
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }

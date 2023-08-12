@@ -1,40 +1,60 @@
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../../config/session";
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import Link from 'next/link'
 import Button from '../../components/button'
-import { useEventContext } from '../../context';
-import * as actions from '../../context/actions'
+import { useEventContext, GET_EVENTS } from '../../context'; 
 import db from '../../db'
+
+
+
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req, params }) {
     const { user } = req.session;
-    const props = {};
+    const eventId = params.id; 
+    let events;
     if (user) {
-      props.user = req.session.user;
-      const event = await db.event.getId(user.id, params.id); 
-    
-    if (event) 
-      props.event = event;
+      events = await db.event.getAll(user.id);
     }
-    props.isLoggedIn = !!user;
+    if (!events) {
+      req.session.destroy();
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+    return {
+      props: {
+        user: req.session.user,
+        isLoggedIn: true,
+        favoriteEvents: events.map(event => ({
+          ...event, // Event Id from fetched event
+          id: event.id, // favoriteEvent id
+        })),
 
-    return { props };
+      },
+     
+    };
+    
   },
   sessionOptions
+
 );
 
 export default function EventPage(props) {
-  const [{ eventData }, dispatch] = useEventContext();
   const [clicky, setClicked] = useState(false);
   const router = useRouter();
   const eventId = router.query.id;
+  
   const { isLoggedIn } = props
-  const [{eventSearchResults}] = useEventContext()
+  const [{ eventSearchResults }, dispatch] = useEventContext(); 
 
   const [eventSet, setEvent] = useState({});
+  
 
   let isFavoriteEvent = false;
   if (props.event) {
@@ -46,11 +66,10 @@ export default function EventPage(props) {
       setEvent(event);
     }
   }
-
   useEffect(() => {
     if (!props.event && !event)
-      router.push('/')
-  }, [props.event, eventSearchResults, router, eventSet])
+      router.push('/');
+  }, [props.event, eventSearchResults, router, eventSet]);
 
   const ID_URL = `https://app.ticketmaster.com/discovery/v2/events/${eventId}?apikey=VFznyrIiGGXWVay8OEG5vg5EwtST7pwp&locale=*`;
 
@@ -61,15 +80,26 @@ export default function EventPage(props) {
         throw new Error('Failed to fetch data from the API');
       }
       const data = await response.json();
-      console.log('success')
+      console.log('success');
+      console.log(data)
 
-      const { id, dates, start, name, info, pleaseNote, priceRanges, images} = data;
+      const {dates, start, name, info, pleaseNote, priceRanges, images, eventId } = data;
 
       // Set the event state
-      setEvent({ id, dates, start, name, info, pleaseNote, priceRanges, images});
-
+      setEvent({dates, start, name, info, pleaseNote, priceRanges, images, eventId });
+      console.log(data)
+      console.log(eventSet.start)
+     
+      // Dispatch event data and eventId to context
+      // dispatch({
+      //   type: GET_EVENTS,
+      //   payload: {
+      //     event: data,
+      //     eventId: eventId,
+      //   },
+      // });
     } catch (error) {
-
+      // Handle error
     }
   };
 
@@ -77,38 +107,28 @@ export default function EventPage(props) {
     fetchDataId();
   }, [ID_URL]);
 
-
-
-  async function addToFavs({eventSet}) {
-    e.preventDefault();
+console.log(eventId)
+  async function addToFavs(eventId) {
     const res = await fetch("/api/event", {
       method: 'POST',
-      body: JSON.stringify({ id })
+      body: JSON.stringify({ eventId })
     });
+    console.log('clicked')
 
     if (res.status === 200) {
-      dispatch({
-        action: actions.ADD_TO_FAVORITES, 
-        payload: eventSet
-      });
-      
+      console.log('success')
       handleToggleClicked();
-      router.replace(router.asPath);
+      router.push('/favorites')
     }
   }
 
-  async function deleteFromFavs(e, id) {
-    e.preventDefault();
+  async function deleteFromFavs(eventId) {
     const res = await fetch("/api/event", {
       method: 'DELETE',
-      body: JSON.stringify({ id })
+      body: JSON.stringify({ eventId})
     });
 
     if (res.status === 200) {
-      dispatch({
-        action: actions.REMOVE_FROM_FAVORITES, 
-        payload: eventId
-      });
       handleToggleClicked();
       router.replace(router.asPath);
     }
@@ -139,8 +159,9 @@ export default function EventPage(props) {
       </div>
       <div class="container">
       {clicky === false ? (
-                  <Link href='/favorites'> 
-                    <Button onClick={addToFavs}> Save Event </Button>
+          
+         <Link href={{ pathname: '/favorites' }}>
+  <Button onClick={() => addToFavs({eventId, eventSet})} > Save Event </Button>
                   </Link>
                 ) : (
                   <Button onClick={deleteFromFavs}> Remove Event </Button>

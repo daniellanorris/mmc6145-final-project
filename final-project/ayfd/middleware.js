@@ -4,11 +4,6 @@ import sessionOptions from './config/session'
 
 export async function middleware(req) {
   const res = NextResponse.next();
-
-  if (req.url.pathname === '/login') {
-    return res;
-  }
-
   const session = await getIronSession(req, res, sessionOptions);
 
   const { user } = session;
@@ -21,5 +16,7 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/favorites"]
+  matcher: [
+    "/favorites",
+  ]
 }

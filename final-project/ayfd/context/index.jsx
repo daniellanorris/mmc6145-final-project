@@ -2,10 +2,10 @@ import {useContext, createContext, useReducer} from 'react'
 import initialState from './state'
 import reducer from './reducer'
 
-export const eventContext = createContext()
+export const EventContext = createContext()
 
 export const useEventContext = () => {
-  const context = useContext(eventContext)
+  const context = useContext(EventContext)
   if (context === undefined)
     throw new Error('error getting context')
   return context
@@ -13,5 +13,5 @@ export const useEventContext = () => {
 
 export const EventProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  return <eventContext.Provider {...props} value={[state, dispatch]} />
+  return <EventContext.Provider {...props} value={[state, dispatch]} />
 }

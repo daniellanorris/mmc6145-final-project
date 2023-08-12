@@ -1,34 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ayfd? 
 
-## Getting Started
+## (are you from denver?)
+### an event application to access events occurring in and around Denver
 
-First, run the development server:
+### **Techstack**
++ Next.js
++ JavaScript
++ React.js
++ Mongoose and Mongodb
++ Vercel (for deployment)
++ Bcrypt for auth purposes
++ Bootstrap for CSS styling 
++ 
+  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### **External API:**
+>**TicketMaster API**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![ticketmaster](https://www.livenation.com/ticketmaster/img/ticketmaster-banner2500w.png)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+>> https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
++ Bringing in data uploaded to TicketMaster and compiling the data into a list format.
++ The data can be filtered using filter buttons appearing on the home page. The URL instantly updates when a filter is applied.
++ Users can also save events to their favorites, which is hosted on it's own page, and pulls from the api endpoint /api/favorites.
+  
+> ### Logging in / out
++ Users have the ability to create an account, which will be maintained in a MongoDb Atlas database, utilizing the MongoDb Atlas integration with GitHub.
++ Passwords cannot yet be changed once a user is created, but this is a goal for the expanded functionality of the application.
++ Once a user has been created and logged in, the user is routed to the '/' page, which is the main page where events are displayed.
+  
 
-## Learn More
+> ### **Future Functionality Goals:**
+  + Allowing users to delete events once saved
+  + Allowing user upload of events 
+  + Integrating a Google Maps iframe to allow location data to be broadcasted onto individual event location maps.
+  + Load more events in a pagination format.
 
-To learn more about Next.js, take a look at the following resources:
+> ### **Project Contribution:**
++ To contribute to this project, developers must obtain the following:
+  + A MongoDb Local URI for development (the Vercel MongoDb integration is used in production)
+  + A TicketMaster API, creating a free tier account. This allows for up to 5,000 API calls a day
+  + The creation of an IRON_PASS password, which is your string of choosing. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+>> ayfd application layout
+## Tables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| ayfd | page |
+| ------ | ----------- |
+| .next   | next modules |
+| node_modules| node_module packages|
+| components | button, dropdown, footer, header, layout, list, map (all .jsx) |
+| config   | session.js |
+| context   | actions.js, index.jsx, ListContext.jsx, reducer.js, state.js (to manage event data context and list context for filter|
+| db   | |
+| controllers  | |
+|util   | connection.js, index.js
+||auth.js, event.js, user.js | 
+|models | event.js, user.js|
+|| index.js |
+|hooks| useLogout.js|
+|pages ||
+|api||
+|auth| [action.js]|
+||event.js|
+|event| [ id ].jsx|
+|| _app.js, favorites.jsx, index.jsx, login.jsx, signup.jsx|
+|public  ||
+|styles| global.css, headerfootermodule.css, home.module.css, login.module.css|
+| | delete_icon.png, LOGO-white.png|
+|root| .env.local, .gitignore, jsconfig.json, next.config.js, package-lock.json, package.json, README.md, vite.config.js|
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+  
+
+

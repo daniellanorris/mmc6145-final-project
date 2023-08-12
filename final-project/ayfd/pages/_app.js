@@ -5,9 +5,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { EventProvider } from '../context'
 
 
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
+
     <EventProvider>
       <div class="bg-dark" >
         <Header />
@@ -15,6 +17,7 @@ function MyApp({ Component, pageProps }) {
         <Footer />
       </div>
       </EventProvider>
+
     </>
   )
 }
