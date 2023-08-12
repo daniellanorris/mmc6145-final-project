@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 export default function Button({children, onClick}) {
   const [clicked, setClicked] = useState(false);
-
   const handleButtonClick = () => {
     onClick
     setClicked(true);

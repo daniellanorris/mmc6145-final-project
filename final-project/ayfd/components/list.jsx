@@ -109,7 +109,6 @@ export default function List() {
                   <div style={{ width: 305, height: 225, background: 'grey' }} />
                 )}
                 <h1>{event.name}</h1>
-                <p>{event.id}</p>
                 <p>{event.info ? event.info : event.pleaseNote}</p>
                 
               </div>

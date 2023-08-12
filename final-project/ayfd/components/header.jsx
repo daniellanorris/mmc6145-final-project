@@ -1,40 +1,34 @@
 import React from "react";
+import styles from '../public/styles/headerfooter.module.css';
+import useLogout from '../hooks/useLogout';
 
-import styles from '../public/styles/headerfooter.module.css'
-import useLogout from '../hooks/useLogout'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export default function Header() {
   const loggeroutter = useLogout();
+
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#" style={{ color: "white" }}> </a>
-        <div>
-          <img href="/" width="100" height="100" src="/LOGO-white.png" className={styles.autoheightimg} alt="logo" style={{padding: "10px"}}/>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/favorites">Favorites </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/login" onClick={loggeroutter}> Logout </a>
-            </li>
-          </ul>
-          {/* Links for the toggler icon */}
-          <ul class="navbar-nav ml-auto">
-            <li> <a href="/"> Home</a></li> 
-          </ul>
-        </div>
-      </nav>
+        <Navbar expand="lg" data-bs-theme="dark">
+      <Container>
       <div>
-      </div>
+          <img href="/" width="100" height="100" src="/LOGO-white.png" className={styles.autoheightimg} alt="logo" style={{ padding: "10px" }} />
+        </div>
+        <Navbar.Brand className="bg-lt" href="#home"> <h1 style={{color:"white"}}> ayfd? </h1></Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/favorites">Favorites</Nav.Link>
+            <Nav.Link onClick={loggeroutter} href="/login">Logout</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+
     </>
   )
 }
